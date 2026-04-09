@@ -1,0 +1,11 @@
+pandas
+numpy
+matplotlib
+statsmodels
+linearmodels
+pyreadr
+pyarrow
+requests
+sgfmill
+scikit-learn
+osfclient

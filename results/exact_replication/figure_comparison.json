@@ -1,0 +1,116 @@
+{
+  "fig 1 panel a v01.png": {
+    "generated_md5": "f428217c5c5edc57f9c95e4fe0659a6b",
+    "reference_md5": "762aaf6ca4490353f66ddb09a3f2fd58",
+    "byte_identical": false,
+    "generated_size": [
+      2400,
+      1350
+    ],
+    "reference_size": [
+      2400,
+      1350
+    ],
+    "same_size": true,
+    "pixel_identical": false,
+    "mean_abs_diff": 1.3721222222222222,
+    "max_abs_diff": 255,
+    "changed_pixels": 212058,
+    "total_pixels": 3240000
+  },
+  "fig 1 panel b v01.png": {
+    "generated_md5": "bbaa767d822b11b4b1d7d525731217a3",
+    "reference_md5": "0d4ca2b1d2875c7de0817e1f1b6492b3",
+    "byte_identical": false,
+    "generated_size": [
+      2400,
+      1350
+    ],
+    "reference_size": [
+      2400,
+      1350
+    ],
+    "same_size": true,
+    "pixel_identical": false,
+    "mean_abs_diff": 2.651122685185185,
+    "max_abs_diff": 255,
+    "changed_pixels": 596668,
+    "total_pixels": 3240000
+  },
+  "fig 1 panel c v01.png": {
+    "generated_md5": "33c7f64f05a43896f9a7490398f7d8ff",
+    "reference_md5": "60b6023243ae54aa8d14339bad2b4cb1",
+    "byte_identical": false,
+    "generated_size": [
+      2400,
+      1350
+    ],
+    "reference_size": [
+      2400,
+      1350
+    ],
+    "same_size": true,
+    "pixel_identical": false,
+    "mean_abs_diff": 1.3640247685185185,
+    "max_abs_diff": 255,
+    "changed_pixels": 203673,
+    "total_pixels": 3240000
+  },
+  "fig 1 panel d v01.png": {
+    "generated_md5": "6be077f5574f138f7f99d273901b5ebb",
+    "reference_md5": "ff6dc5fdfe62c4d978da7067603f62e1",
+    "byte_identical": false,
+    "generated_size": [
+      2400,
+      1350
+    ],
+    "reference_size": [
+      2400,
+      1350
+    ],
+    "same_size": true,
+    "pixel_identical": false,
+    "mean_abs_diff": 2.972841898148148,
+    "max_abs_diff": 255,
+    "changed_pixels": 634279,
+    "total_pixels": 3240000
+  },
+  "fig 2 v01.png": {
+    "generated_md5": "be3388f640f766d8c1ebfeb8849c2d8d",
+    "reference_md5": "8d847aa7388df09cfb269706c7ee1963",
+    "byte_identical": false,
+    "generated_size": [
+      2400,
+      1350
+    ],
+    "reference_size": [
+      2400,
+      1350
+    ],
+    "same_size": true,
+    "pixel_identical": false,
+    "mean_abs_diff": 1.3388428240740742,
+    "max_abs_diff": 255,
+    "changed_pixels": 207332,
+    "total_pixels": 3240000
+  },
+  "fig 3 v01.png": {
+    "generated_md5": "b8a973df88793a8e091ed52c0a6950c4",
+    "reference_md5": "50f101bd3bf8d56ee3bd2a534e105586",
+    "byte_identical": false,
+    "generated_size": [
+      2400,
+      1350
+    ],
+    "reference_size": [
+      2400,
+      1350
+    ],
+    "same_size": true,
+    "pixel_identical": false,
+    "mean_abs_diff": 1.3604632716049383,
+    "max_abs_diff": 255,
+    "changed_pixels": 204117,
+    "total_pixels": 3240000
+  }
+}

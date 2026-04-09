@@ -1,0 +1,148 @@
+{
+  "method": {
+    "metric_label": "paper_like_raw_2_60_affine_visits_20",
+    "population": "players crosswalked between OSF and GoGoD via go-learning-eras",
+    "move_window": [
+      2,
+      60
+    ],
+    "recent_rules_fallback": "japanese",
+    "recent_rules_handling": "per-game SGF rules normalized to KataGo-supported rules, with japanese fallback when SGF rules are missing or unsupported",
+    "recent_komi_handling": "per-game SGF komi, with unsupported quarter-komi rounded half-up to the nearest KataGo-supported half-integer",
+    "recent_max_visits": 20,
+    "move_1_excluded": true,
+    "historical_anchor_population": "all OSF players",
+    "recent_continuation_population": "crosswalk-linked GoGoD players",
+    "recent_sampling_games_per_player_year": 3,
+    "recent_score_start_date": "2022-01-01",
+    "recent_max_scoring_games": null,
+    "affine_intercept": 0.0022387165680807,
+    "affine_slope": 0.9404497155357116
+  },
+  "counts": {
+    "linked_players": 206,
+    "recent_games_total": 1536,
+    "recent_games_scored": 1269,
+    "recent_games_2022_plus": 1326,
+    "recent_game_player_rows": 2538,
+    "recent_player_year_rows": 625,
+    "extension_player_year_rows": 625
+  },
+  "validation": {
+    "historical_vs_original": {
+      "n": 71,
+      "corr": 0.9883902121128771,
+      "mae": 0.019226987350054948
+    },
+    "historical_sampling_vs_full_all_players": {
+      "n": 71,
+      "corr": 0.99118990265327,
+      "mae": 0.14109372672765794,
+      "baseline_year": "1950",
+      "n_full_game_player_rows": 195320,
+      "n_sampled_game_player_rows": 59966,
+      "corr_2016_plus": 0.9992844496561782,
+      "mae_2016_plus": 0.14940006423950467
+    },
+    "overlap_2021_game_player": {
+      "n_game_player_rows": 730,
+      "corr": 0.43440179271501855,
+      "mae": 0.4501344430410961,
+      "median_abs_err": 0.4000000000000057
+    },
+    "overlap_2021_player_year": {
+      "n_player_year_rows": 142,
+      "corr": 0.7067533063180862,
+      "mae": 0.4677755241197184,
+      "median_abs_err": 0.4000000000000057
+    },
+    "recent_2021_bridge_vs_combined": {
+      "n": 5,
+      "corr": 0.9998546847795208,
+      "mae": 0.002429211389172714
+    }
+  },
+  "latest_date": "2026-01-12",
+  "latest_year": 2026,
+  "latest_year_partial": true,
+  "latest_extension_rows": [
+    {
+      "year": 2014,
+      "fe": 0.13374813922988443,
+      "fe_ci_ll": -0.20602804996289212,
+      "fe_ci_ul": 0.473524328422661
+    },
+    {
+      "year": 2015,
+      "fe": 0.1986623408085866,
+      "fe_ci_ll": -0.14062718135382637,
+      "fe_ci_ul": 0.5379518629709996
+    },
+    {
+      "year": 2016,
+      "fe": 0.16580157735061962,
+      "fe_ci_ll": -0.17307132512717124,
+      "fe_ci_ul": 0.5046744798284105
+    },
+    {
+      "year": 2017,
+      "fe": 0.2997506923756113,
+      "fe_ci_ll": -0.03869978644681957,
+      "fe_ci_ul": 0.638201171198042
+    },
+    {
+      "year": 2018,
+      "fe": 0.6026226711643465,
+      "fe_ci_ll": 0.26461877211797497,
+      "fe_ci_ul": 0.9406265702107172
+    },
+    {
+      "year": 2019,
+      "fe": 0.7252907472456317,
+      "fe_ci_ll": 0.38705807653929947,
+      "fe_ci_ul": 1.0635234179519657
+    },
+    {
+      "year": 2020,
+      "fe": 0.751264425434001,
+      "fe_ci_ll": 0.4129054349282989,
+      "fe_ci_ul": 1.0896234159397067
+    },
+    {
+      "year": 2021,
+      "fe": 0.8213610446662309,
+      "fe_ci_ll": 0.4836989995110853,
+      "fe_ci_ul": 1.159023089821373
+    },
+    {
+      "year": 2022,
+      "fe": 1.1948949529897113,
+      "fe_ci_ll": 0.8570470541981592,
+      "fe_ci_ul": 1.5327428517812616
+    },
+    {
+      "year": 2023,
+      "fe": 1.2070490264681084,
+      "fe_ci_ll": 0.8690475276511346,
+      "fe_ci_ul": 1.545050525285088
+    },
+    {
+      "year": 2024,
+      "fe": 1.1847777546360638,
+      "fe_ci_ll": 0.8457646280313558,
+      "fe_ci_ul": 1.523790881240762
+    },
+    {
+      "year": 2025,
+      "fe": 1.193900724337627,
+      "fe_ci_ll": 0.8557901899150975,
+      "fe_ci_ul": 1.5320112587601509
+    },
+    {
+      "year": 2026,
+      "fe": 1.070576529720056,
+      "fe_ci_ll": 0.7155726226787281,
+      "fe_ci_ul": 1.4255804367613827
+    }
+  ]
+}
