@@ -46,13 +46,13 @@ The main result in plain English:
 
 ## Main Result
 
-The chart files below are committed audit artifacts generated from private GoGoD inputs plus KataGo. They are included for inspection in the repo, but they are not the public clean-clone rerun product.
-
-![Paper-like extension chart](results/paper_like_extension/paper_like_extension_chart.png)
-
-The pre-AlphaGo-centered view is usually easier to interpret:
+The chart below is the main interpretive view. It is a committed audit artifact generated from private GoGoD inputs plus KataGo, included for inspection in the repo rather than as part of the public clean-clone rerun path.
 
 ![Pre-AlphaGo-centered chart](results/paper_like_extension/paper_like_extension_prealphago_centered.png)
+
+Alternate raw-reference view:
+
+- [results/paper_like_extension/paper_like_extension_chart.png](results/paper_like_extension/paper_like_extension_chart.png)
 
 Important note:
 
@@ -81,8 +81,8 @@ What those checks mean in plain English:
 
 Start here:
 
-- main chart: [results/paper_like_extension/paper_like_extension_chart.png](results/paper_like_extension/paper_like_extension_chart.png)
-- easier-to-read centered chart: [results/paper_like_extension/paper_like_extension_prealphago_centered.png](results/paper_like_extension/paper_like_extension_prealphago_centered.png)
+- primary chart: [results/paper_like_extension/paper_like_extension_prealphago_centered.png](results/paper_like_extension/paper_like_extension_prealphago_centered.png)
+- alternate raw-reference chart: [results/paper_like_extension/paper_like_extension_chart.png](results/paper_like_extension/paper_like_extension_chart.png)
 - exact historical rerun artifacts: [results/exact_replication](results/exact_replication)
 - methods note: [docs/METHODS.md](docs/METHODS.md)
 
