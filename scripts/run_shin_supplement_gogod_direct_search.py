@@ -42,11 +42,11 @@ SGF_PROP_PATTERNS = {
 MOVE_PAT = re.compile(r";([BW])\[([a-s]{2})\]")
 
 DEFAULT_ZIPS = [
-    Path("/Users/peter/Downloads/0196-1980-Database-Jan2026.zip"),
-    Path("/Users/peter/Downloads/1981-1990-Database-Jan2026.zip"),
-    Path("/Users/peter/Downloads/1991-2000-Database-Jan2026.zip"),
-    Path("/Users/peter/Downloads/2001-2010-Database-Jan2026.zip"),
-    Path("/Users/peter/Downloads/2011-2020-Database-Jan2026.zip"),
+    ROOT / "data/private/0196-1980-Database-Jan2026.zip",
+    ROOT / "data/private/1981-1990-Database-Jan2026.zip",
+    ROOT / "data/private/1991-2000-Database-Jan2026.zip",
+    ROOT / "data/private/2001-2010-Database-Jan2026.zip",
+    ROOT / "data/private/2011-2020-Database-Jan2026.zip",
     ROOT / "data/private/2021-2026-Database-Jan2026.zip",
 ]
 
@@ -195,8 +195,8 @@ def main() -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
 
     games = parse_direct_gogod_games(cache_path, ROOT / "public_refs/go_learning_eras/data/players.csv")
-    released_yearly = pd.read_csv(ROOT / "outputs/original_r_full/fig1_panel_c_yearly.csv")
-    released_monthly = pd.read_csv(ROOT / "outputs/original_r_full/fig1_panel_d_monthly.csv")
+    released_yearly = pd.read_csv(ROOT / "results/exact_replication/fig1_panel_c_yearly.csv")
+    released_monthly = pd.read_csv(ROOT / "results/exact_replication/fig1_panel_d_monthly.csv")
 
     osf_dt = pyreadr.read_r(str(ROOT / "osf/shin et al 2023 data v001.RData"))["dt"][["game_id", "game_date"]].drop_duplicates()
     osf_dt["game_date"] = pd.to_datetime(osf_dt["game_date"], errors="coerce")

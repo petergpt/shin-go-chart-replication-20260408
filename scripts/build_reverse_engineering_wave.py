@@ -18,7 +18,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OSF = ROOT / "osf/shin et al 2023 data v001.RData"
-DEFAULT_TARGET = ROOT / "outputs/original_r_full/fig1_panel_a_yearly.csv"
+DEFAULT_TARGET = ROOT / "results/exact_replication/fig1_panel_a_yearly.csv"
 DEFAULT_OUTPUT_DIR = ROOT / "outputs/reverse_engineering"
 
 

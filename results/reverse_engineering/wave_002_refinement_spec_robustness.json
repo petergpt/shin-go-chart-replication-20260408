@@ -1,0 +1,76 @@
+{
+  "train_years": [
+    [1951, 2000]
+  ],
+  "candidates": [
+    {
+      "kind": "raw",
+      "name": "raw_2_60",
+      "move_start": 2,
+      "move_end": 60
+    },
+    {
+      "kind": "raw",
+      "name": "raw_2_55",
+      "move_start": 2,
+      "move_end": 55
+    },
+    {
+      "kind": "raw",
+      "name": "raw_2_50",
+      "move_start": 2,
+      "move_end": 50
+    },
+    {
+      "kind": "raw",
+      "name": "raw_3_60",
+      "move_start": 3,
+      "move_end": 60
+    },
+    {
+      "kind": "raw",
+      "name": "raw_4_60",
+      "move_start": 4,
+      "move_end": 60
+    },
+    {
+      "kind": "raw",
+      "name": "raw_5_60",
+      "move_start": 5,
+      "move_end": 60
+    },
+    {
+      "kind": "raw",
+      "name": "raw_6_60",
+      "move_start": 6,
+      "move_end": 60
+    },
+    {
+      "kind": "raw",
+      "name": "raw_8_60",
+      "move_start": 8,
+      "move_end": 60
+    },
+    {
+      "kind": "raw",
+      "name": "raw_11_60",
+      "move_start": 11,
+      "move_end": 60
+    },
+    {
+      "kind": "affine",
+      "name": "raw_2_60_affine",
+      "base": "raw_2_60"
+    },
+    {
+      "kind": "affine",
+      "name": "raw_2_50_affine",
+      "base": "raw_2_50"
+    },
+    {
+      "kind": "affine",
+      "name": "raw_5_60_affine",
+      "base": "raw_5_60"
+    }
+  ]
+}

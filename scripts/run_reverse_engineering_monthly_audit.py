@@ -14,7 +14,7 @@ from linearmodels.panel import PanelOLS
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OSF = ROOT / "osf/shin et al 2023 data v001.RData"
-DEFAULT_TARGET = ROOT / "outputs/original_r_full/fig1_panel_b_monthly.csv"
+DEFAULT_TARGET = ROOT / "results/exact_replication/fig1_panel_b_monthly.csv"
 SEALED_START = 793  # 2016-01
 SEALED_END = 862  # 2021-10
 ONSET_START = 795  # 2016-03

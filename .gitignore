@@ -1,5 +1,6 @@
 .DS_Store
 /.venv/
+/.playwright-cli/
 /__pycache__/
 *.pyc
 
@@ -8,6 +9,8 @@
 /outputs/
 /refs/
 /osf_live/
+/osf/*
+!/osf/README.md
 
 Rplots.pdf
 original_fig1_panelA.png

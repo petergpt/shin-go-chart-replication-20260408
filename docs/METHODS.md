@@ -1,19 +1,31 @@
 # Methods
 
-This document describes the methodology that the repository is prepared to defend.
+This document describes the methodology behind the two main outputs in this repository.
+
+At a high level, "decision quality" here does not mean win rate. It means a move-quality score derived from comparing the move a human actually played with alternatives evaluated by a very strong Go engine. Higher values mean the played moves look closer to the engine's stronger choices.
+
+Short glossary for the terms used below:
+
+- `DQI`: the paper's decision-quality index, a move-quality score rather than a win-rate measure
+- `affine`: a simple straight-line rescaling of the form `a + b x`
+- `SGF`: the standard file format used to store Go game records
+- `komi`: the starting point compensation given to White in Go
+- `corr`: correlation, where values closer to `1` mean two lines move together more closely
+- `MAE`: mean absolute error, the average gap between two lines
+- `FE`: fixed effects, meaning the regression mostly compares each player against themselves over time
 
 ## 1. Goal
 
 The project had two separate goals:
 
-1. Reproduce the released historical outputs behind the Shin et al. paper as exactly as the public OSF release allows.
+1. Reproduce the released historical outputs behind the Shin et al. paper to reported precision, as far as the public OSF release allows.
 2. Build a post-`2021` continuation of the uplift chart that is robust on its own terms, even if it is not the authors' unreleased exact metric.
 
 Those goals required different standards.
 
 ## 2. Exact Historical Replication
 
-For the published `1950-2021` historical series, the repository uses the authors' public OSF materials directly:
+For the published `1950-2021` historical series, the repository uses the authors' public OSF materials directly after fetching them into `osf/` with `scripts/fetch_public_osf_release.py`:
 
 - `osf/shin et al 2023 data v001.RData`
 - `osf/shin et al 2023 simulated ai move data v001.RData`
@@ -24,7 +36,9 @@ The exact rerun is driven by:
 - `scripts/run_shin_main_text_full_r.R`
 - `scripts/replicate_shin_panel_ab_r.R`
 
-This yields the exact released yearly and monthly series for the main text outputs and Table 1 coefficients.
+This yields the released yearly and monthly series and the released Table 1 coefficients to reported precision.
+
+The figures regenerated here are close to the released PNGs, but not pixel-identical. The exact claim is about the numerical series and coefficients.
 
 ## 3. Why The Final Extension Does Not Claim To Be The Authors' Exact Post-2021 Metric
 
@@ -38,7 +52,7 @@ The key blocker was move `1`:
 
 Because of that, the repository does not present the final extension as the authors' exact hidden metric continued forward.
 
-Instead, it presents a separately defined paper-like continuation metric that was selected by objective historical tests.
+Instead, it presents a separately defined paper-like continuation metric that was selected by historical scorecards plus a documented manual shortlist-and-audit follow-up step.
 
 ## 4. Candidate Search For A Paper-Like Metric
 
@@ -66,7 +80,7 @@ Selection discipline:
   - train: `1951-2000`
   - validation: `2001-2010`
   - holdout: `2011-2021`
-- sealed monthly audit opened only after yearly finalists were frozen
+- manual monthly follow-up audit on a sealed monthly window opened only after yearly candidates were narrowed
 
 Scoring criteria included:
 
@@ -78,7 +92,13 @@ Scoring criteria included:
 - monthly agreement
 - direction-match statistics
 
-The winning metric was `raw_2_60_affine`.
+The final selected metric was `raw_2_60_affine`.
+
+That selection should be read carefully:
+
+- the yearly search and yearly robustness waves narrowed the candidate set
+- the manual monthly follow-up audit was used as the decisive tie-break among a manually chosen shortlist of strong yearly candidates
+- `raw_2_60_affine` was not the top row on every yearly leaderboard; it was selected because it held up as a top-tier yearly candidate and then came out best on the committed monthly audit of that manual shortlist
 
 ## 5. Definition Of The Final Extension Metric
 
@@ -94,6 +114,7 @@ Its construction is:
    - aggregate to game-player median DQI
    - aggregate again to player-year median DQI
    - fit yearly fixed effects with player fixed effects and player-clustered SEs
+   - in plain language, compare each player mostly against themselves over time so the line is less driven by who happened to be active in a given year
 
 2. Historical calibration:
    - fit the historical yearly series
@@ -107,6 +128,7 @@ Its construction is:
    - respect per-game SGF rules when possible, with a documented fallback
    - respect per-game SGF komi, rounding unsupported quarter-komi to the nearest supported half-integer
    - restrict to players crosswalked between GoGoD and the historical OSF / `go-learning-eras` bridge
+   - the current bridge uses the reciprocal monthly-activity matcher implemented in `build_bridge_crosswalk`, with defaults `min_games = 20` and `min_score = 0.99`
    - sample up to `3` evenly spaced games per player-year
    - aggregate to player-year medians
    - fit the same yearly fixed-effects structure
@@ -115,6 +137,8 @@ Its construction is:
 4. Presentation:
    - report the raw yearly FE series
    - report a pre-AlphaGo-centered view for interpretation
+   - show 95% confidence intervals from the player-clustered yearly FE regression
+   - do not treat those intervals as full uncertainty bands for player matching, sampling, or engine choice
    - mark `2026` as partial-year data through `2026-01-12`
 
 ## 6. Validation Used For The Final Repository Result
@@ -138,11 +162,13 @@ The most important ones are:
     - `n = 142`
     - `corr = 0.7068`
     - `MAE = 0.4678`
-- yearly bridge continuity at the splice:
+- internal bridge sensitivity at the splice:
   - `corr = 0.9999`
   - `MAE = 0.0024`
 
-These checks are strong enough for a paper-like continuation claim, but not strong enough to relabel the metric as the authors' exact hidden post-`2021` DQI.
+That last number is not an external validation result. It is an internal sensitivity check comparing two nearby ways of fitting the reconstructed splice around `2021`.
+
+These checks support a narrow claim: this is a close paper-like continuation metric. They do not support relabeling the metric as the authors' exact hidden post-`2021` DQI.
 
 ## 7. Differences From The Original Paper
 
@@ -161,14 +187,15 @@ What differs:
 - the continuation population is restricted to crosswalk-linked recent GoGoD players
 - recent years use a frozen sampled-game rule
 - recent years use a fixed KataGo continuation setup rather than the authors' unrecovered original pipeline
+- the historical segment inside the continuation chart is a reconstructed historical series calibrated to match the released Figure 1A line closely; it is not a literal reuse of the exact released yearly CSV
 - the final extension is explicitly a paper-like continuation, not a claim of exact method identity
 
 ## 8. Interpretation
 
 The strongest substantive conclusion supported by this repository is:
 
-- the published historical uplift is real and is exactly reproducible from the public release
-- a frozen independently reconstructed metric that matches the historical paper line very closely still shows decision quality well above the pre-AlphaGo norm through the available post-`2021` data
+- the released historical uplift pattern is reproducible from the public release
+- a frozen independently reconstructed metric that matches the historical paper line very closely still shows decision quality well above the pre-AlphaGo norm through the available post-`2021` data for the linked continuation population
 
 The strongest unsupported conclusion would be:
 

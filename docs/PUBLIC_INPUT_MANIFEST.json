@@ -1,0 +1,73 @@
+{
+  "generated_at": "2026-04-09",
+  "notes": [
+    "This manifest records the local public-input snapshot used for the committed results bundle.",
+    "For OSF files, users can fetch the same filenames and verify the hashes with scripts/verify_public_inputs.py.",
+    "For the vendored go-learning-eras bridge files, the exact upstream commit was not preserved during initial acquisition; the committed file hashes below are the repository's canonical local snapshot."
+  ],
+  "osf": {
+    "project_id": "xpf3q",
+    "storage": "osfstorage",
+    "files": [
+      {
+        "remote_path": "/Analyses in the Main Text/shin et al 2023 data v001.RData",
+        "local_path": "osf/shin et al 2023 data v001.RData",
+        "sha256": "fc22f0719e45ffdc6039acf07d573295a94c4313ad4fcdd872f0c6a91318a97a"
+      },
+      {
+        "remote_path": "/Analyses in the Main Text/shin et al 2023 simulated ai move data v001.RData",
+        "local_path": "osf/shin et al 2023 simulated ai move data v001.RData",
+        "sha256": "f75f1d4b1472115a6f884c0628d137949cd7a86d6be38b28884c80da416cfc82"
+      },
+      {
+        "remote_path": "/Analyses in the Main Text/shin et al 2023 analyses in the main text v01.R",
+        "local_path": "osf/shin et al 2023 analyses in the main text v01.R",
+        "sha256": "d389614ea8e5d7c3111d7d0987f26848fe368aafc8a5f415daf06c246b4c317f"
+      },
+      {
+        "remote_path": "/Analyses in the Main Text/fig 1 panel a v01.png",
+        "local_path": "osf/fig 1 panel a v01.png",
+        "sha256": "51ab5a3f07e2ef1ce988d8d09e090eeafb204cf201199a78be249186a0b3d510"
+      },
+      {
+        "remote_path": "/Analyses in the Main Text/fig 1 panel b v01.png",
+        "local_path": "osf/fig 1 panel b v01.png",
+        "sha256": "5484cc55e6d620b74b199f93ba7de24c015c5b2bf84550f2120191dadbc9fe7e"
+      },
+      {
+        "remote_path": "/Analyses in the Main Text/fig 1 panel c v01.png",
+        "local_path": "osf/fig 1 panel c v01.png",
+        "sha256": "a774e86e0338b57b475d04c64f523a0afa400103fd968a12972a0664fa3d014c"
+      },
+      {
+        "remote_path": "/Analyses in the Main Text/fig 1 panel d v01.png",
+        "local_path": "osf/fig 1 panel d v01.png",
+        "sha256": "86e01d44f8bc54caa0d25b82a3a65d54d1ab6dca7fc1e531b15df5b59be1247f"
+      },
+      {
+        "remote_path": "/Analyses in the Main Text/fig 2 v01.png",
+        "local_path": "osf/fig 2 v01.png",
+        "sha256": "ad7216b16e4d9f75c4bc6d93b13b280932461d449d205e4e49363e72c64810a0"
+      },
+      {
+        "remote_path": "/Analyses in the Main Text/fig 3 v01.png",
+        "local_path": "osf/fig 3 v01.png",
+        "sha256": "ebacfd73ab55faa85c53aea38c475916d545836fba8e56d02f79cb681d53c49b"
+      }
+    ]
+  },
+  "go_learning_eras": {
+    "upstream_repo": "https://github.com/babeheim/go-learning-eras",
+    "retrieved_for_packaging": "2026-04-09",
+    "files": [
+      {
+        "local_path": "public_refs/go_learning_eras/data/games.csv",
+        "sha256": "c9dac62a7cebdd57e6d58ff54d76fcff765b50d91820b916a711125253c1fff1"
+      },
+      {
+        "local_path": "public_refs/go_learning_eras/data/players.csv",
+        "sha256": "55b377a8c238b44d7d4e05b56043e63bf98ade9f10a5f384dea91fbe02a84af6"
+      }
+    ]
+  }
+}

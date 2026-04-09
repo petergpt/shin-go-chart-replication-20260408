@@ -8,6 +8,8 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 
+ROOT = Path(__file__).resolve().parents[1]
+
 
 def md5(path: Path) -> str:
     return hashlib.md5(path.read_bytes()).hexdigest()
@@ -56,24 +58,15 @@ def main() -> None:
     output_json = Path(args.output_json).resolve()
 
     refs = {
-        "fig 1 panel a v01.png": Path(
-            "/Users/peter/projects/shin-go-chart-replication-20260408/osf/fig 1 panel a v01.png"
-        ),
-        "fig 1 panel b v01.png": Path(
-            "/Users/peter/projects/shin-go-chart-replication-20260408/osf/fig 1 panel b v01.png"
-        ),
-        "fig 1 panel c v01.png": Path(
-            "/Users/peter/projects/shin-go-chart-replication-20260408/osf_live/Analyses in the Main Text/fig 1 panel c v01.png"
-        ),
-        "fig 1 panel d v01.png": Path(
-            "/Users/peter/projects/shin-go-chart-replication-20260408/osf_live/Analyses in the Main Text/fig 1 panel d v01.png"
-        ),
-        "fig 2 v01.png": Path(
-            "/Users/peter/projects/shin-go-chart-replication-20260408/osf_live/Analyses in the Main Text/fig 2 v01.png"
-        ),
-        "fig 3 v01.png": Path(
-            "/Users/peter/projects/shin-go-chart-replication-20260408/osf_live/Analyses in the Main Text/fig 3 v01.png"
-        ),
+        name: ROOT / "osf" / name
+        for name in (
+            "fig 1 panel a v01.png",
+            "fig 1 panel b v01.png",
+            "fig 1 panel c v01.png",
+            "fig 1 panel d v01.png",
+            "fig 2 v01.png",
+            "fig 3 v01.png",
+        )
     }
 
     summary = {}

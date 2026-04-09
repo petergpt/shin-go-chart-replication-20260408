@@ -1,0 +1,9 @@
+package,version
+data.table,1.18.2.1
+lfe,3.1.1
+ggplot2,4.0.2
+coefplot,1.2.9
+lubridate,1.9.5
+lemon,0.5.2
+gridExtra,2.3
+kim,0.6.4

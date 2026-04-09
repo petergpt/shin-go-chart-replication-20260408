@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import subprocess
 import time
 from pathlib import Path
@@ -13,6 +14,13 @@ import pandas as pd
 from sgfmill import sgf
 
 ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_KATAGO_PATH = Path(os.environ.get("KATAGO_PATH", "katago"))
+DEFAULT_KATAGO_CONFIG = Path(
+    os.environ.get("KATAGO_CONFIG", str(ROOT / "data/private/katago/analysis_example.cfg"))
+)
+DEFAULT_KATAGO_MODEL = Path(
+    os.environ.get("KATAGO_MODEL", str(ROOT / "data/private/katago/g170e-b20-model.bin.gz"))
+)
 
 import sys
 
@@ -182,16 +190,16 @@ def main() -> None:
     parser.add_argument("--osf-data", type=Path, default=ROOT / "osf/shin et al 2023 data v001.RData")
     parser.add_argument("--gle-games", type=Path, default=ROOT / "public_refs/go_learning_eras/data/games.csv")
     parser.add_argument("--gle-players", type=Path, default=ROOT / "public_refs/go_learning_eras/data/players.csv")
-    parser.add_argument("--katago-path", type=Path, default=Path("/opt/homebrew/bin/katago"))
+    parser.add_argument("--katago-path", type=Path, default=DEFAULT_KATAGO_PATH)
     parser.add_argument(
         "--katago-config",
         type=Path,
-        default=Path("/opt/homebrew/Cellar/katago/1.16.4/share/katago/configs/analysis_example.cfg"),
+        default=DEFAULT_KATAGO_CONFIG,
     )
     parser.add_argument(
         "--katago-model",
         type=Path,
-        default=Path("/opt/homebrew/Cellar/katago/1.16.4/share/katago/g170e-b20c256x2-s5303129600-d1228401921.bin.gz"),
+        default=DEFAULT_KATAGO_MODEL,
     )
     parser.add_argument("--rules", default="japanese")
     parser.add_argument("--moves", type=int, default=20)

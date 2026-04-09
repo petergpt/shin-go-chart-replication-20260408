@@ -415,8 +415,8 @@ def main() -> None:
     )
     ai_games = load_ai_games(project_root / "osf/shin et al 2023 simulated ai move data v001.RData")
 
-    released_yearly = pd.read_csv(project_root / "outputs/original_r_full/fig1_panel_c_yearly.csv")
-    released_monthly = pd.read_csv(project_root / "outputs/original_r_full/fig1_panel_d_monthly.csv")
+    released_yearly = pd.read_csv(project_root / "results/exact_replication/fig1_panel_c_yearly.csv")
+    released_monthly = pd.read_csv(project_root / "results/exact_replication/fig1_panel_d_monthly.csv")
     osf_unique = pyreadr.read_r(str(project_root / "osf/shin et al 2023 data v001.RData"))["dt"][
         ["game_id", "game_date"]
     ].drop_duplicates()

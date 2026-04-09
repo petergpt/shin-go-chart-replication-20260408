@@ -8,11 +8,11 @@ move-level pipeline.
 
 Primary target:
 
-- [fig1_panel_a_yearly.csv](../original_r_full/fig1_panel_a_yearly.csv)
+- [fig1_panel_a_yearly.csv](../exact_replication/fig1_panel_a_yearly.csv)
 
 Sealed follow-up target after yearly candidate selection:
 
-- [fig1_panel_b_monthly.csv](../original_r_full/fig1_panel_b_monthly.csv)
+- [fig1_panel_b_monthly.csv](../exact_replication/fig1_panel_b_monthly.csv)
 
 ## Search Protocol
 
@@ -43,7 +43,7 @@ Purpose:
 
 ### Monthly Seal
 
-Monthly comparison against [fig1_panel_b_monthly.csv](../original_r_full/fig1_panel_b_monthly.csv)
+Monthly comparison against [fig1_panel_b_monthly.csv](../exact_replication/fig1_panel_b_monthly.csv)
 is not used during coarse candidate search.
 
 Use monthly only after yearly finalists are frozen.
@@ -103,7 +103,7 @@ Definitions:
 - `peak_year_error <= 0.08`
 - `post_event_first_diff_corr >= 0.75`
 
-### Publishable-Like Historical Match
+### Very Close Historical Match
 
 - `overall_corr >= 0.98`
 - `overall_mae <= 0.03`

@@ -1,0 +1,13 @@
+{
+  "notes": [
+    "This was a manual shortlist follow-up audit, not a fully predeclared decisive sealed protocol.",
+    "The shortlist below is the exact candidate set evaluated in the committed monthly audit leaderboard."
+  ],
+  "candidates": [
+    "raw_2_60_affine",
+    "raw_5_60_affine",
+    "raw_2_60",
+    "raw_5_60",
+    "raw_2_50"
+  ]
+}

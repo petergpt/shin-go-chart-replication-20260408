@@ -12,6 +12,15 @@ from pathlib import Path
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_GAME_DATA_ZIP = ROOT / "data/private/GameData.zip"
+DEFAULT_GOGOD_ZIPS = [
+    ROOT / "data/private/0196-1980-Database-Jan2026.zip",
+    ROOT / "data/private/1981-1990-Database-Jan2026.zip",
+    ROOT / "data/private/1991-2000-Database-Jan2026.zip",
+    ROOT / "data/private/2001-2010-Database-Jan2026.zip",
+    ROOT / "data/private/2011-2020-Database-Jan2026.zip",
+    ROOT / "data/private/2021-2026-Database-Jan2026.zip",
+]
 
 import sys
 
@@ -91,19 +100,12 @@ def main() -> None:
     parser.add_argument("--osf-data", type=Path, default=ROOT / "osf/shin et al 2023 data v001.RData")
     parser.add_argument("--gle-games", type=Path, default=ROOT / "public_refs/go_learning_eras/data/games.csv")
     parser.add_argument("--gle-players", type=Path, default=ROOT / "public_refs/go_learning_eras/data/players.csv")
-    parser.add_argument("--game-data-zip", type=Path, default=Path("/Users/peter/Downloads/GameData.zip"))
+    parser.add_argument("--game-data-zip", type=Path, default=DEFAULT_GAME_DATA_ZIP)
     parser.add_argument(
         "--gogod-zips",
         type=Path,
         nargs="+",
-        default=[
-            Path("/Users/peter/Downloads/0196-1980-Database-Jan2026.zip"),
-            Path("/Users/peter/Downloads/1981-1990-Database-Jan2026.zip"),
-            Path("/Users/peter/Downloads/1991-2000-Database-Jan2026.zip"),
-            Path("/Users/peter/Downloads/2001-2010-Database-Jan2026.zip"),
-            Path("/Users/peter/Downloads/2011-2020-Database-Jan2026.zip"),
-            ROOT / "data/private/2021-2026-Database-Jan2026.zip",
-        ],
+        default=DEFAULT_GOGOD_ZIPS,
     )
     parser.add_argument(
         "--output-dir",

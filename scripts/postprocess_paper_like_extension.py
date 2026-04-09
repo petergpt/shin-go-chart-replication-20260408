@@ -20,6 +20,7 @@ import matplotlib.pyplot as plt
 GREEN = "#69AA45"
 BLUE = "#2A6F9E"
 ORANGE = "#D9B25A"
+LIGHT_BLUE = "#C9DDF1"
 GRAY = "#8E8E8E"
 PAPER = "#333333"
 ALPHAGO_DATE = date(2016, 3, 15)
@@ -128,10 +129,14 @@ def plot_centered_chart(
     latest_year_partial = bool(last_date and last_date.year == last_year and last_date < date(last_year, 12, 31))
     last_tick = decimal_year(last_date) if latest_year_partial and last_date else last_year
     last_label = f"{last_year}\n({last_date.strftime('%b')})" if latest_year_partial and last_date else str(last_year)
+    alpha_x = decimal_year(ALPHAGO_DATE)
 
     fig, ax = plt.subplots(figsize=(8, 4.5))
     ax.axhline(0, color=GRAY, linewidth=1.0, linestyle=(0, (2, 5)))
-    ax.axvspan(decimal_year(ALPHAGO_DATE), last_tick, alpha=0.45, color=ORANGE)
+    ax.axvspan(alpha_x, cutoff_year + 0.5, alpha=0.14, color=ORANGE, zorder=0)
+    ax.axvspan(cutoff_year + 0.5, last_tick, alpha=0.30, color=LIGHT_BLUE, zorder=0)
+    ax.axvline(alpha_x, color=ORANGE, linewidth=1.1, linestyle=(0, (3, 3)))
+    ax.axvline(cutoff_year + 0.5, color=BLUE, linewidth=1.2, linestyle=(0, (2, 3)))
 
     if hist:
         ax.errorbar(
@@ -163,18 +168,17 @@ def plot_centered_chart(
             markersize=4.8,
             capsize=0,
         )
-        cutoff_hist = next((row for row in reversed(hist) if row.year == cutoff_year), None)
-        if cutoff_hist is not None:
+        if len(ext) >= 2:
             ax.plot(
-                [cutoff_year, *[row.year for row in ext]],
-                [cutoff_hist.fe - baseline_mean, *[row.fe - baseline_mean for row in ext]],
+                [row.year for row in ext],
+                [row.fe - baseline_mean for row in ext],
                 color=BLUE,
                 linewidth=1.0,
                 alpha=0.7,
             )
 
-    xticks = [1950] + list(range(1960, 2021, 10)) + [last_tick]
-    xlabels = ["1950"] + [str(year) for year in range(1960, 2021, 10)] + [last_label]
+    xticks = [1950] + list(range(1960, 2021, 10)) + [2021, last_tick]
+    xlabels = ["1950"] + [str(year) for year in range(1960, 2021, 10)] + ["2021", last_label]
     ax.set_xlim(1948, max(last_year + 1, 2027))
     ax.set_xticks(xticks)
     ax.set_xticklabels(xlabels)
@@ -184,19 +188,23 @@ def plot_centered_chart(
     ax.spines["left"].set_color("#333333")
     ax.tick_params(axis="both", labelsize=11, colors="#555555")
     ax.set_xlabel("")
-    ax.set_ylabel("")
+    ax.set_ylabel("Move quality vs\npre-AlphaGo average", color="#444444")
+    y_min, y_max = ax.get_ylim()
+    y_span = y_max - y_min
+    partial_note = ""
     if latest_year_partial and last_date:
         label = last_date.strftime("%b %d, %Y").replace(" 0", " ")
-        ax.text(
-            0.99,
-            0.98,
-            f"{last_year} partial through {label}",
-            transform=ax.transAxes,
-            ha="right",
-            va="top",
-            fontsize=9,
-            color="#666666",
-        )
+        partial_note = f" {last_year} uses games through {label}."
+    fig.text(
+        0.015,
+        0.01,
+        "95% intervals. Green = original-paper-aligned history; blue = new continuation."
+        + partial_note,
+        ha="left",
+        va="bottom",
+        fontsize=8,
+        color="#666666",
+    )
     fig.tight_layout()
     fig.savefig(outpath, dpi=240)
     plt.close(fig)
@@ -212,7 +220,11 @@ def plot_overlay(
     fig, ax = plt.subplots(figsize=(8, 4.5))
     ax.axhline(0, color=GRAY, linewidth=1.0, linestyle=(0, (2, 5)))
     last_x = decimal_year(last_date) if last_date else float(max(row.year for row in rows))
-    ax.axvspan(decimal_year(ALPHAGO_DATE), last_x, alpha=0.3, color=ORANGE)
+    alpha_x = decimal_year(ALPHAGO_DATE)
+    ax.axvspan(alpha_x, cutoff_year + 0.5, alpha=0.12, color=ORANGE, zorder=0)
+    ax.axvspan(cutoff_year + 0.5, last_x, alpha=0.24, color=LIGHT_BLUE, zorder=0)
+    ax.axvline(alpha_x, color=ORANGE, linewidth=1.1, linestyle=(0, (3, 3)))
+    ax.axvline(cutoff_year + 0.5, color=BLUE, linewidth=1.2, linestyle=(0, (2, 3)))
 
     ax.plot(
         [row.year for row in paper_rows],
@@ -227,25 +239,30 @@ def plot_overlay(
     ext = [row for row in rows if row.year > cutoff_year]
     ax.plot([row.year for row in hist], [row.fe for row in hist], color=GREEN, linewidth=1.5, label="paper-like")
     if ext:
-        ax.plot([cutoff_year, *[row.year for row in ext]], [hist[-1].fe, *[row.fe for row in ext]], color=BLUE, linewidth=1.5)
+        ax.plot([row.year for row in ext], [row.fe for row in ext], color=BLUE, linewidth=1.5)
         ax.scatter([row.year for row in ext], [row.fe for row in ext], color=BLUE, s=18)
 
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
     ax.tick_params(axis="both", labelsize=11, colors="#555555")
+    ax.set_ylabel("Relative move quality\n(0 = reference level)", color="#444444")
+    y_min, y_max = ax.get_ylim()
+    y_span = y_max - y_min
+    partial_note = ""
     if last_date and last_date < date(last_date.year, 12, 31):
         label = last_date.strftime("%b %d, %Y").replace(" 0", " ")
-        ax.text(
-            0.99,
-            0.98,
-            f"{last_date.year} partial through {label}",
-            transform=ax.transAxes,
-            ha="right",
-            va="top",
-            fontsize=9,
-            color="#666666",
-        )
+        partial_note = f" {last_date.year} uses games through {label}."
     ax.legend(frameon=False, loc="upper left")
+    fig.text(
+        0.015,
+        0.01,
+        "Historical line matches the paper closely through 2021; 2022+ is linked GoGoD continuation."
+        + partial_note,
+        ha="left",
+        va="bottom",
+        fontsize=8,
+        color="#666666",
+    )
     fig.tight_layout()
     fig.savefig(outpath, dpi=240)
     plt.close(fig)

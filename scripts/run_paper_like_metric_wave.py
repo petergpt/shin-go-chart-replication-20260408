@@ -27,7 +27,7 @@ import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_TARGET = ROOT / "outputs/original_r_full/fig1_panel_a_yearly.csv"
+DEFAULT_TARGET = ROOT / "results/exact_replication/fig1_panel_a_yearly.csv"
 DEFAULT_OUTPUT_DIR = ROOT / "outputs/reverse_engineering"
 DEFAULT_EVENT_YEAR = 2016
 DEFAULT_TRAIN_YEARS = "1951-2008"

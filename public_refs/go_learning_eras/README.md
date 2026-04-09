@@ -7,6 +7,11 @@ This folder contains the minimal public files copied from the `go-learning-eras`
 
 They are committed here to avoid vendoring the full upstream repository and its nested git metadata.
 
-Upstream source:
+License and attribution:
 
-- [babeheim/go-learning-eras](https://github.com/babeheim/go-learning-eras)
+- upstream project: [babeheim/go-learning-eras](https://github.com/babeheim/go-learning-eras)
+- upstream data license: `CC BY-NC-SA 4.0`
+- copied license text: [LICENSE.md](LICENSE.md)
+- local snapshot hashes: [../../docs/PUBLIC_INPUT_MANIFEST.json](../../docs/PUBLIC_INPUT_MANIFEST.json)
+
+These copied bridge files remain subject to that upstream license.

@@ -1,7 +1,7 @@
 {
   "method": {
     "metric_label": "paper_like_raw_2_60_affine_visits_20",
-    "population": "players crosswalked between OSF and GoGoD via go-learning-eras",
+    "population": "mixed: reconstructed all-OSF-player historical segment through 2021, linked GoGoD continuation sample from 2022 onward",
     "move_window": [
       2,
       60
@@ -17,7 +17,11 @@
     "recent_score_start_date": "2022-01-01",
     "recent_max_scoring_games": null,
     "affine_intercept": 0.0022387165680807,
-    "affine_slope": 0.9404497155357116
+    "affine_slope": 0.9404497155357116,
+    "chart_segments": {
+      "historical_through_2021": "all OSF players under reconstructed historical metric",
+      "continuation_2022_plus": "crosswalk-linked recent GoGoD players"
+    }
   },
   "counts": {
     "linked_players": 206,

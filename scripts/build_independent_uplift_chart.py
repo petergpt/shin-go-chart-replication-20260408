@@ -8,8 +8,9 @@ Method:
 - Known move-1 provenance issues are avoided by design by starting the move window at 2.
 
 This is not presented as the authors' exact post-2021 series. It is an
-independent continuation calibrated by overlap validation on exact matched 2021
-games and anchored historically on the released OSF DQI table.
+independent continuation anchored historically on the released OSF DQI table
+and checked against matched 2021 overlap rows, while remaining explicitly
+paper-like rather than exact.
 """
 
 from __future__ import annotations
@@ -55,10 +56,19 @@ from scripts.validate_katago_dqi_sample import (
 GREEN = "#69AA45"
 BLUE = "#2A6F9E"
 ORANGE = "#D9B25A"
+LIGHT_BLUE = "#C9DDF1"
 GRAY = "#8E8E8E"
 Z_975 = 1.959963984540054
 
 RECENT_ZIP = ROOT / "data/private/2021-2026-Database-Jan2026.zip"
+DEFAULT_PAPER_YEARLY = ROOT / "results/exact_replication/fig1_panel_a_yearly.csv"
+DEFAULT_KATAGO_PATH = Path(os.environ.get("KATAGO_PATH", "katago"))
+DEFAULT_KATAGO_CONFIG = Path(
+    os.environ.get("KATAGO_CONFIG", str(ROOT / "data/private/katago/analysis_example.cfg"))
+)
+DEFAULT_KATAGO_MODEL = Path(
+    os.environ.get("KATAGO_MODEL", str(ROOT / "data/private/katago/g170e-b20-model.bin.gz"))
+)
 WORKER_KATAGO: KataGoAnalysis | None = None
 
 
@@ -880,10 +890,15 @@ def plot_combined_chart(coeffs: pd.DataFrame, last_date: pd.Timestamp, cutoff_ye
     coeffs = coeffs.copy().sort_values("year")
     hist = coeffs.loc[coeffs["year"] <= cutoff_year].copy()
     ext = coeffs.loc[coeffs["year"] > cutoff_year].copy()
+    alpha_x = decimal_year(ALPHAGO_DATE)
+    last_tick = decimal_year(last_date)
 
     fig, ax = plt.subplots(figsize=(8, 4.5))
     ax.axhline(0, color=GRAY, linewidth=1.0, linestyle=(0, (2, 5)))
-    ax.axvspan(decimal_year(ALPHAGO_DATE), decimal_year(last_date), alpha=0.45, color=ORANGE)
+    ax.axvspan(alpha_x, cutoff_year + 0.5, alpha=0.14, color=ORANGE, zorder=0)
+    ax.axvspan(cutoff_year + 0.5, last_tick, alpha=0.30, color=LIGHT_BLUE, zorder=0)
+    ax.axvline(alpha_x, color=ORANGE, linewidth=1.1, linestyle=(0, (3, 3)))
+    ax.axvline(cutoff_year + 0.5, color=BLUE, linewidth=1.2, linestyle=(0, (2, 3)))
 
     if not hist.empty:
         ax.errorbar(
@@ -909,17 +924,12 @@ def plot_combined_chart(coeffs: pd.DataFrame, last_date: pd.Timestamp, cutoff_ye
             markersize=4.8,
             capsize=0,
         )
-        ax.plot(
-            [cutoff_year, *ext["year"].tolist()],
-            [hist.loc[hist["year"] == cutoff_year, "fe"].iloc[0], *ext["fe"].tolist()],
-            color=BLUE,
-            linewidth=1.0,
-            alpha=0.7,
-        )
+        if len(ext) >= 2:
+            ax.plot(ext["year"], ext["fe"], color=BLUE, linewidth=1.0, alpha=0.7)
 
     last_label = f"{last_date.year}\n({last_date.strftime('%b')})"
-    xticks = [1950] + list(range(1960, 2020, 10)) + [decimal_year(last_date)]
-    xlabels = ["1950"] + [str(y) for y in range(1960, 2020, 10)] + [last_label]
+    xticks = [1950] + list(range(1960, 2020, 10)) + [2021, last_tick]
+    xlabels = ["1950"] + [str(y) for y in range(1960, 2020, 10)] + ["2021", last_label]
     y_min = min(-0.8, float(coeffs["fe_ci_ll"].min()) - 0.05)
     y_max = max(1.2, float(coeffs["fe_ci_ul"].max()) + 0.05)
     tick_min = math.floor(y_min / 0.4) * 0.4
@@ -935,19 +945,22 @@ def plot_combined_chart(coeffs: pd.DataFrame, last_date: pd.Timestamp, cutoff_ye
     ax.spines["left"].set_color("#333333")
     ax.tick_params(axis="both", labelsize=11, colors="#555555")
     ax.set_xlabel("")
-    ax.set_ylabel("")
+    ax.set_ylabel("Relative move quality\n(0 = reference level)", color="#444444")
+    y_span = tick_max - tick_min
+    partial_note = ""
     if last_date < pd.Timestamp(year=last_date.year, month=12, day=31):
         label = last_date.strftime("%b %d, %Y").replace(" 0", " ")
-        ax.text(
-            0.99,
-            0.98,
-            f"{last_date.year} partial through {label}",
-            transform=ax.transAxes,
-            ha="right",
-            va="top",
-            fontsize=9,
-            color="#666666",
-        )
+        partial_note = f" {last_date.year} uses games through {label}."
+    fig.text(
+        0.015,
+        0.01,
+        "95% intervals. Green = original-paper-aligned history; blue = new continuation."
+        + partial_note,
+        ha="left",
+        va="bottom",
+        fontsize=8,
+        color="#666666",
+    )
     fig.tight_layout()
     fig.savefig(outpath, dpi=240)
     plt.close(fig)
@@ -977,16 +990,17 @@ def main() -> None:
     parser.add_argument("--metric-label")
     parser.add_argument("--affine-intercept", type=float)
     parser.add_argument("--affine-slope", type=float)
-    parser.add_argument("--katago-path", type=Path, default=Path("/opt/homebrew/bin/katago"))
+    parser.add_argument("--paper-yearly-target", type=Path, default=DEFAULT_PAPER_YEARLY)
+    parser.add_argument("--katago-path", type=Path, default=DEFAULT_KATAGO_PATH)
     parser.add_argument(
         "--katago-config",
         type=Path,
-        default=Path("/opt/homebrew/Cellar/katago/1.16.4/share/katago/configs/analysis_example.cfg"),
+        default=DEFAULT_KATAGO_CONFIG,
     )
     parser.add_argument(
         "--katago-model",
         type=Path,
-        default=Path("/opt/homebrew/Cellar/katago/1.16.4/share/katago/g170e-b20c256x2-s5303129600-d1228401921.bin.gz"),
+        default=DEFAULT_KATAGO_MODEL,
     )
     parser.add_argument("--override-config", action="append", default=["logToStdout=false"])
     parser.add_argument("--helper-chunk-input", type=Path)
@@ -1011,7 +1025,10 @@ def main() -> None:
         return
 
     label = args.metric_label or f"moves_{args.move_start}_{args.move_end}_visits_{args.max_visits}"
-    outdir = args.output_dir / label
+    output_root = args.output_dir
+    if output_root == ROOT / "outputs/independent_uplift_chart" and label.startswith("paper_like_"):
+        output_root = ROOT / "outputs/reverse_engineering/paper_like_extension"
+    outdir = output_root / label
     outdir.mkdir(parents=True, exist_ok=True)
 
     osf_dt = load_osf_dt(args.osf_data)
@@ -1098,7 +1115,7 @@ def main() -> None:
     combined_yearly_raw.to_csv(outdir / "combined_yearly_fe_raw.csv", index=False)
     combined_yearly = combined_yearly_raw.copy()
 
-    orig_yearly = pd.read_csv(ROOT / "outputs/original_r_full/fig1_panel_a_yearly.csv")[["year", "fe"]].rename(
+    orig_yearly = pd.read_csv(args.paper_yearly_target)[["year", "fe"]].rename(
         columns={"fe": "orig_fe"}
     )
     historical_yearly_for_comparison = historical_yearly.copy()
@@ -1110,6 +1127,16 @@ def main() -> None:
             historical_yearly_for_comparison, args.affine_intercept, args.affine_slope
         )
         combined_yearly = apply_affine_to_yearly(combined_yearly, args.affine_intercept, args.affine_slope)
+    combined_yearly["segment"] = np.where(
+        combined_yearly["year"] <= 2021,
+        "historical_reconstructed_all_osf_players",
+        "extension_linked_gogod_players",
+    )
+    combined_yearly["segment_population"] = np.where(
+        combined_yearly["year"] <= 2021,
+        "all OSF players under reconstructed historical metric",
+        "crosswalk-linked recent GoGoD players",
+    )
     combined_yearly.to_csv(outdir / "combined_yearly_fe.csv", index=False)
 
     historical_vs_original = compare_series(
@@ -1256,7 +1283,7 @@ def main() -> None:
     summary = {
         "method": {
             "metric_label": label,
-            "population": "players crosswalked between OSF and GoGoD via go-learning-eras",
+            "population": "mixed: reconstructed all-OSF-player historical segment through 2021, linked GoGoD continuation sample from 2022 onward",
             "move_window": [args.move_start, args.move_end],
             "recent_rules_fallback": args.rules,
             "recent_rules_handling": "per-game SGF rules normalized to KataGo-supported rules, with japanese fallback when SGF rules are missing or unsupported",
@@ -1270,6 +1297,10 @@ def main() -> None:
             "recent_max_scoring_games": args.max_scoring_games,
             "affine_intercept": args.affine_intercept,
             "affine_slope": args.affine_slope,
+            "chart_segments": {
+                "historical_through_2021": "all OSF players under reconstructed historical metric",
+                "continuation_2022_plus": "crosswalk-linked recent GoGoD players",
+            },
         },
         "counts": {
             "linked_players": int(len(linked_players)),
